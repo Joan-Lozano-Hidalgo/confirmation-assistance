@@ -3,7 +3,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    <title>React App</title >
+    <title>Joan App</title >
     Hola Mundo
   </>
 )
