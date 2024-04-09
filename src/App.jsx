@@ -9,6 +9,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Navigate to={'/confirm-assistance'} />} />
                 <Route path="/confirm-assistance" element={<ConfirmAssistance />} />
+                <Route path="/confirm-assistance/:id" element={<ConfirmAssistance />} />
                 <Route path="/admin" element={<PrivateRouter permissions={["admin"]} element={<Navigate to={'/admin/Dashboard'} />} unauthorized={<Navigate to="/unauthorized" />} />} />
                 <Route path='/admin/dashboard' element={<PrivateRouter permissions={["admin"]} element={<Dashboard />} unauthorized={<Navigate to="/unauthorized" />} />} />
                 <Route path='/admin/list' element={<PrivateRouter permissions={["admin"]} element={<Admin />} unauthorized={<Navigate to="/unauthorized" />} />} />

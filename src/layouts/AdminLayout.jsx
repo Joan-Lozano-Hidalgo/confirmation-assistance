@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom';
+import prince from '../assets/baby_1.svg'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -20,7 +21,7 @@ const AdminLayout = ({ children }) => {
 
     const logout = () => { }
     return (
-        <div className=" min-h-screen">
+        <div className=" min-h-screen relative">
             <Disclosure as="nav" className="bg-white shadow-lg">
                 {({ open }) => (
                     <>
@@ -142,7 +143,7 @@ const AdminLayout = ({ children }) => {
 
             <div className="py-10 px-8">
                 <main>
-                    <div className="max-w-7xl mx-auto p-4 bg-white rounded-lg ">{children}</div>
+                    <div className="w-full mx-auto p-4 bg-white rounded-lg ">{children}</div>
                 </main>
             </div>
         </div>
