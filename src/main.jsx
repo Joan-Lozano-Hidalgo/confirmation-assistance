@@ -5,7 +5,7 @@ import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    <title>Joan App</title >
+    <title>{import.meta.env.VITE_APP_TITLE}</title >
     <App />
   </>
 )
