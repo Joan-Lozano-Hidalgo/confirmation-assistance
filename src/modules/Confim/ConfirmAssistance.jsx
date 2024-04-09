@@ -1,138 +1,95 @@
-import React from 'react'
-import { Form, ButtonToolbar, Button, Input } from 'rsuite';
-
-
+import React, { useEffect, useRef } from 'react'
+import { Form, InputNumber, Input, Schema } from 'rsuite';
+import { useParams } from 'react-router-dom'
+import { BackendAPI } from '../../services';
+import prince from '../../assets/prince.png'
+import bg from '../../assets/bg-7201.jpg'
+import bg_720 from '../../assets/bg-7201.jpg'
 const ConfirmAssistance = () => {
 
-  return (
-    <main className='w-full min-h-screen flex flex-col justify-center items-center gap-10'>
-      <section className='w-1/2 bg-emerald-400 min-h-52'></section>
-    </main>
-    // <main className="isolate">
-    //   {/* Hero section */}
-    //   <div className="relative isolate -z-10">
-    //     <svg
-    //       className="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
-    //       aria-hidden="true"
-    //     >
-    //       <defs>
-    //         <pattern
-    //           id="1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84"
-    //           width={200}
-    //           height={200}
-    //           x="50%"
-    //           y={-1}
-    //           patternUnits="userSpaceOnUse"
-    //         >
-    //           <path d="M.5 200V.5H200" fill="none" />
-    //         </pattern>
-    //       </defs>
-    //       <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
-    //         <path
-    //           d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
-    //           strokeWidth={0}
-    //         />
-    //       </svg>
-    //       <rect width="100%" height="100%" strokeWidth={0} fill="url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)" />
-    //     </svg>
-    //     <div
-    //       className="absolute left-1/2 right-0 top-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
-    //       aria-hidden="true"
-    //     >
-    //       <div
-    //         className="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
-    //         style={{
-    //           clipPath:
-    //             'polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)',
-    //         }}
-    //       />
-    //     </div>
-    //     <div className="overflow-hidden">
-    //       <div className="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
-    //         <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-    //           {/* Form  */}
-    //           <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
-    //             <Form className='w-full' block>
-    //               <Form.Group controlId="name">
-    //                 <Form.ControlLabel>Username</Form.ControlLabel>
-    //                 <Form.Control name="name" />
-    //                 <Form.HelpText>Username is required</Form.HelpText>
-    //               </Form.Group>
-    //               <Form.Group controlId="email">
-    //                 <Form.ControlLabel>Email</Form.ControlLabel>
-    //                 <Form.Control name="email" type="email" />
-    //                 <Form.HelpText tooltip>Email is required</Form.HelpText>
-    //               </Form.Group>
-    //               <Form.Group controlId="password">
-    //                 <Form.ControlLabel>Password</Form.ControlLabel>
-    //                 <Form.Control name="password" type="password" autoComplete="off" />
-    //               </Form.Group>
-    //               <Form.Group controlId="textarea">
-    //                 <Form.ControlLabel>Textarea</Form.ControlLabel>
-    //                 <Form.Control name="textarea" />
-    //               </Form.Group>
-    //               <Form.Group>
-    //                 <ButtonToolbar>
-    //                   <Button appearance="primary">Submit</Button>
-    //                   <Button appearance="default">Cancel</Button>
-    //                 </ButtonToolbar>
-    //               </Form.Group>
-    //             </Form>
-    //           </div>
-    //           <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
-    //             <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
-    //               <div className="relative">
-    //                 <img
-    //                   src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
-    //                   alt=""
-    //                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
-    //                 />
-    //                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
-    //               </div>
-    //             </div>
-    //             <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
-    //               <div className="relative">
-    //                 <img
-    //                   src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
-    //                   alt=""
-    //                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
-    //                 />
-    //                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
-    //               </div>
-    //               <div className="relative">
-    //                 <img
-    //                   src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=396&h=528&q=80"
-    //                   alt=""
-    //                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
-    //                 />
-    //                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
-    //               </div>
-    //             </div>
-    //             <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
-    //               <div className="relative">
-    //                 <img
-    //                   src="https://images.unsplash.com/photo-1670272504528-790c24957dda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=left&w=400&h=528&q=80"
-    //                   alt=""
-    //                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
-    //                 />
-    //                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
-    //               </div>
-    //               <div className="relative">
-    //                 <img
-    //                   src="https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
-    //                   alt=""
-    //                   className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
-    //                 />
-    //                 <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
+  const [loading, setLoading] = React.useState(true)
+  const [invitation, setInvitation] = React.useState({
+    id: null,
+    name: "",
+    number_of_invites: 1,
+    send: true,
+    invites_confirmed: 1,
+    confirm_invitation: false,
+    uuid: "",
+    phone_number: 0
+  })
+  const invitationRef = useRef()
 
-    // </main>
+  const invitationModel = Schema.Model({
+    name: Schema.Types.StringType().isRequired('This field is required.'),
+    invites_confirmed: Schema.Types.NumberType().isRequired('This field is required.'),
+    confirm_invitation: Schema.Types.BooleanType().isRequired('This field is required.'),
+    phone_number: Schema.Types.StringType().isRequired('This field is required.')
+  })
+
+
+  return (
+    <main className='w-full mx-auto min-h-screen flex flex-col justify-center items-center gap-10 relative px-5'
+      style={{
+        backgroundImage: `url(${window.innerWidth <= 720 ? bg_720 : bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
+      {/* <img src={bg} alt="" className=' absolute z-0 ' /> */}
+      <img src={prince} alt="el principito" className='absolute  top-5 lg:top-64 lg:right-10 z-0 lg:max-w-lg' />
+      <section className='w-full max-w-xl z-10 bg-white border-red-500 p-5 rounded-xl'>
+        <h2 className='w-full text-center  font-semibold mb-10 text-[#ac8e6e]'>Baby Shower Santiago</h2>
+        <Form
+          fluid
+          ref={invitationRef}
+          model={invitationModel}
+          formValue={invitation}
+          onChange={(value) => setInvitation(value)}
+          className="w-full grid grid-cols-1 gap-2 gap-y-0 place-items-start"
+        >
+          <Form.Group className="w-full m-0">
+            <Form.ControlLabel className="pl-2 text-base">Nombre</Form.ControlLabel>
+            <Form.Control
+              name="name"
+              placeholder="Joan Lozano"
+              className="w-full"
+              maxLength={25}
+              size='lg'
+            />
+          </Form.Group>
+          <Form.Group className="w-full m-0">
+            <Form.ControlLabel className="pl-2 text-base">Confirmacion (Cantidad)</Form.ControlLabel>
+            <Form.Control
+              name="invites_confirmed"
+              placeholder="Joan Lozano"
+              className="w-full"
+              accepter={InputNumber}
+              min={1}
+              max={6}
+              size='lg'
+            />
+          </Form.Group>
+          <Form.Group className="w-full m-0">
+            <Form.ControlLabel className="pl-2 text-base">Telefono</Form.ControlLabel>
+            <Form.Control
+              name="phone_number"
+              placeholder="Joan Lozano"
+              className="w-full"
+              onChange={(value) => {
+                const formattedValue = value.replace(/[^\d+]/g, '').replace(/^(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
+                setInvitation({ ...invitation, phone_number: formattedValue });
+              }}
+              maxLength={13}
+              size='lg'
+            />
+          </Form.Group>
+          <div className='w-full flex justify-center items-center gap-2'>
+            <button className='w-[200px] p-2 bg-[#6ed2e1]  hover:bg-[#6ea4e1] transition-all duration-150 text-base rounded-lg text-black '>Asistire</button>
+            <button className='w-[200px] p-2 bg-[#ead7ba] hover:bg-[#dac8ab] transition-all duration-150 text-base rounded-lg text-black '>No Asistire</button>
+          </div>
+        </Form>
+      </section>
+    </main>
   )
 }
 

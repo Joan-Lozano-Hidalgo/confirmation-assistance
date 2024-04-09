@@ -1,4 +1,4 @@
-import axiosInstanceAuth from "api/auth.js";
+import axiosInstanceAuth from "../../apis/Auth.js";
 
 const AuthAPI = {
   Login: (data) => axiosInstanceAuth().post("/security/authenticate", data),
