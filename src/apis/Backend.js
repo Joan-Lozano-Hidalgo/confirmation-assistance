@@ -2,7 +2,7 @@ import axios from "axios";
 
 const gateway = import.meta.env.VITE_BACKEND_API;
 
-const axiosInstanceAuth = () => {
+const axiosInstanceBackend = () => {
   const instance = axios.create({
     baseURL: gateway,
     headers: {
@@ -12,4 +12,4 @@ const axiosInstanceAuth = () => {
 
   return instance;
 };
-export default axiosInstanceAuth;
+export default axiosInstanceBackend;
