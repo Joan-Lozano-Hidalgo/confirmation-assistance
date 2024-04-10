@@ -5,7 +5,7 @@ import { AdminLayout } from '../layouts'
 const PrivateRouter = ({ element, permissions, unauthorized }) => {
 
     const user = JSON.parse(localStorage.getItem('user')) || null
-
+    
     const haspermission = () => {
         // if (!permissions) return true
         // if (!user) return false
@@ -15,13 +15,13 @@ const PrivateRouter = ({ element, permissions, unauthorized }) => {
     return (
         <Fragment>
             {
-                // !user ?
-                // haspermission() ?
-                <AdminLayout>
-                    {element}
-                </AdminLayout>
-                // : unauthorized
-                // : <Navigate to="/login" />
+                user ?
+                    // haspermission() ?
+                    <AdminLayout>
+                        {element}
+                    </AdminLayout>
+                    // : unauthorized
+                    : <Navigate to="/login" />
             }
         </Fragment>
     )

@@ -4,6 +4,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom';
 import prince from '../assets/baby_1.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -52,10 +54,12 @@ const AdminLayout = ({ children }) => {
                                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
                                     <Menu as="div" className="relative ml-3">
                                         <div>
-                                            <Menu.Button className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            <Menu.Button className="relative border-2 border-indigo-500 flex p-2 justify-center items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2  focus:border-indigo-500">
                                                 <span className="absolute -inset-1.5" />
                                                 <span className="sr-only">Open user menu</span>
-                                                <img className="lg:h-12 h-8 lg:w-12 w-8 rounded-full" src="https://avatars.githubusercontent.com/u/1164541?v=4" alt="" />
+                                                <FontAwesomeIcon
+                                                    icon={faUser}
+                                                    className=" h-5  w-5 " />
                                             </Menu.Button>
                                         </div>
                                         <Transition
@@ -143,7 +147,7 @@ const AdminLayout = ({ children }) => {
 
             <div className="py-10 px-8">
                 <main>
-                    <div className="w-full mx-auto p-4 bg-white rounded-lg ">{children}</div>
+                    <div className="w-full max-w-screen-xl mx-auto p-4 bg-white rounded-lg ">{children}</div>
                 </main>
             </div>
         </div>

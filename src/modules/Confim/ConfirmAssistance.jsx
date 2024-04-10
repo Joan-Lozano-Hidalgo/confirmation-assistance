@@ -20,16 +20,16 @@ const ConfirmAssistance = () => {
     invites_confirmed: 1,
     confirm_invitation: false,
     uuid: "",
-    phone_number: 0
+    phone_number: ""
   })
   const [confirms, setConfirms] = useState([])
   const invitationRef = useRef()
 
   const invitationModel = Schema.Model({
-    name: Schema.Types.StringType().isRequired('This field is required.'),
+    name: Schema.Types.StringType().isRequired('Este campo es requerido.'),
     // invites_confirmed: Schema.Types.NumberType().isRequired('This field is required.'),
     // confirm_invitation: Schema.Types.BooleanType().isRequired('This field is required.'),
-    phone_number: Schema.Types.StringType().isRequired('This field is required.')
+    phone_number: Schema.Types.StringType().isRequired('Este campo es requerido.')
   })
 
   const getConfirms = async () => {
@@ -39,11 +39,11 @@ const ConfirmAssistance = () => {
       const datos = data?.data.map((item) => {
         return {
           id: item.id,
-          name: "Joan Lozano",
-          invites_confirmed: 1,
-          confirm_invitation: true,
-          uuid: "3c9c53b1-758a-41d2-9802-bab673963d50",
-          phone_number: 75130512
+          name: item?.attributes?.name,
+          invites_confirmed: item?.attributes?.invites_confirmed,
+          confirm_invitation: item?.attributes?.confirm_invitation,
+          uuid: item?.attributes?.uuid,
+          phone_number: item?.attributes?.phone_number
 
         }
       })
@@ -57,6 +57,10 @@ const ConfirmAssistance = () => {
   }
 
   const sendConfirmation = async (estado) => {
+    if (!invitationRef.current.check()) {
+      toast.error('Por favor complete los campos requeridos.')
+      return
+    }
     const payload = {
       data: {
         name: invitation?.name,
@@ -122,7 +126,7 @@ const ConfirmAssistance = () => {
         backgroundPosition: 'center',
       }}>
       {/* <img src={bg} alt="" className=' absolute z-0 ' /> */}
-      <img src={prince} alt="el principito" className='absolute  top-5 lg:top-64 lg:right-10 z-0 lg:max-w-lg' />
+      <img src={prince} alt="el principito" className='absolute top-5 2xl:top-64 lg:right-10 z-0 max-w-sm lg:max-w-lg' />
       <section className={`w-full max-w-xl z-10 bg-white border-red-500 p-5 rounded-xl ${isVisible ? 'opacity-100 transition-opacity duration-1000' : 'opacity-0'}`}>
         {/* <section className='w-full max-w-xl z-10 bg-white border-red-500 p-5 rounded-xl '> */}
         <h2 className='w-full text-center  font-semibold mb-10 text-[#ac8e6e]'>Baby Shower Santiago</h2>
@@ -145,10 +149,10 @@ const ConfirmAssistance = () => {
             />
           </Form.Group>
           <Form.Group className="w-full m-0">
-            <Form.ControlLabel className="pl-2 text-base">Confirmacion (Cantidad)</Form.ControlLabel>
+            <Form.ControlLabel className="pl-2 text-base">Confirmacion (No sobrepasar la cantidad segun invitación)</Form.ControlLabel>
             <Form.Control
               name="invites_confirmed"
-              placeholder="Joan Lozano"
+              placeholder="1"
               className="w-full"
               accepter={InputNumber}
               min={1}
@@ -160,7 +164,7 @@ const ConfirmAssistance = () => {
             <Form.ControlLabel className="pl-2 text-base">Telefono</Form.ControlLabel>
             <Form.Control
               name="phone_number"
-              placeholder="Joan Lozano"
+              placeholder="Tu número de telefono al que se te envio la invitación"
               className="w-full"
               onChange={(value) => {
                 const formattedValue = value.replace(/[^\d+]/g, '');

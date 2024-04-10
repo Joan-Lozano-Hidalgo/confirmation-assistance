@@ -23,7 +23,9 @@ const Login = () => {
         const token = response?.data?.jwt
         localStorage.setItem('user', JSON.stringify(user))
         localStorage.setItem('token', token)
-        navigate('/admin/dashboard')
+        setTimeout(() => {
+          navigate('/admin/dashboard')
+        }, 500);
       }).catch((error) => {
         console.error(error)
       })
