@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form, InputNumber, Input, Schema } from 'rsuite';
 import { useParams } from 'react-router-dom'
 import { BackendAPI } from '../../services';
@@ -9,8 +9,8 @@ import { toast } from 'react-toastify';
 
 const ConfirmAssistance = () => {
 
-  const [loading, setLoading] = React.useState(true)
-  const [invitation, setInvitation] = React.useState({
+  const [loading, setLoading] = useState(true)
+  const [invitation, setInvitation] = useState({
     id: null,
     name: "",
     number_of_invites: 1,
@@ -52,6 +52,17 @@ const ConfirmAssistance = () => {
 
   }
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Cambiar isVisible a true después de 5 segundos para mostrar la sección
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 500);
+
+    // Limpiar el temporizador para evitar fugas de memoria
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <main className='w-full mx-auto min-h-screen flex flex-col justify-center items-center gap-10 relative px-5'
@@ -62,7 +73,8 @@ const ConfirmAssistance = () => {
       }}>
       {/* <img src={bg} alt="" className=' absolute z-0 ' /> */}
       <img src={prince} alt="el principito" className='absolute  top-5 lg:top-64 lg:right-10 z-0 lg:max-w-lg' />
-      <section className='w-full max-w-xl z-10 bg-white border-red-500 p-5 rounded-xl'>
+      <section className={`w-full max-w-xl z-10 bg-white border-red-500 p-5 rounded-xl ${isVisible ? 'opacity-100 transition-opacity duration-1000' : 'opacity-0'}`}>
+        {/* <section className='w-full max-w-xl z-10 bg-white border-red-500 p-5 rounded-xl '> */}
         <h2 className='w-full text-center  font-semibold mb-10 text-[#ac8e6e]'>Baby Shower Santiago</h2>
         <Form
           fluid
@@ -76,7 +88,7 @@ const ConfirmAssistance = () => {
             <Form.ControlLabel className="pl-2 text-base">Nombre</Form.ControlLabel>
             <Form.Control
               name="name"
-              placeholder="Joan Lozano"
+              placeholder="Ingrese su nombre"
               className="w-full"
               maxLength={25}
               size='lg'
