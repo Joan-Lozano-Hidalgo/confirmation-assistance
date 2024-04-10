@@ -3,21 +3,30 @@ import imageLogo from "../../assets/campestre.png";
 import { toast } from "react-toastify";
 import { Button, Form, InputGroup } from "rsuite";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { AuthAPI } from "../../services";
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
 
   const loginRef = useRef();
   const [userInfo, setUserInfo] = useState({
-    userName: "",
+    identifier: "",
     password: "",
-    app: import.meta.env.VITE_ID,
   });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     if (loginRef.current.check()) {
-      console.log(userInfo);
-      toast.success("Inicio de sesion exitoso");
+      AuthAPI.Login(userInfo).then((response) => {
+        const user = response?.data?.user
+        const token = response?.data?.jwt
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', token)
+        navigate('/admin/dashboard')
+      }).catch((error) => {
+        console.error(error)
+      })
     }
   };
 
@@ -38,9 +47,9 @@ const Login = () => {
               ref={loginRef}
               className="w-full"
             >
-              <Form.Group controlId="userName">
+              <Form.Group controlId="identifier">
                 <Form.ControlLabel>Usuario</Form.ControlLabel>
-                <Form.Control name="userName" />
+                <Form.Control name="identifier" />
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.ControlLabel>Contraseña </Form.ControlLabel>

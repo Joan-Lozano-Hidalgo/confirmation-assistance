@@ -5,6 +5,8 @@ import { BackendAPI } from '../../services';
 import prince from '../../assets/prince.png'
 import bg from '../../assets/bg-7201.jpg'
 import bg_720 from '../../assets/bg-7201.jpg'
+import { toast } from 'react-toastify';
+
 const ConfirmAssistance = () => {
 
   const [loading, setLoading] = React.useState(true)
@@ -26,6 +28,29 @@ const ConfirmAssistance = () => {
     confirm_invitation: Schema.Types.BooleanType().isRequired('This field is required.'),
     phone_number: Schema.Types.StringType().isRequired('This field is required.')
   })
+
+  const sendConfirmation = async (estado) => {
+    const payload = {
+      data: {
+        name: invitation?.name,
+        invites_confirmed: invitation?.invites_confirmed,
+        confirm_invitation: estado,
+        phone_number: invitation?.phone_number
+      }
+    }
+    try {
+      const response = await BackendAPI.createInvitation(payload)
+      console.log(response?.data)
+      if (response.status === 200 && estado === true) {
+        toast.success('Nos alegra que nos acompañes.')
+      } else if (response.status === 200 && estado === false) {
+        toast.warn('Nos entristece que no puedas acompañarnos.')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
 
 
   return (
@@ -84,8 +109,14 @@ const ConfirmAssistance = () => {
             />
           </Form.Group>
           <div className='w-full flex justify-center items-center gap-2'>
-            <button className='w-[200px] p-2 bg-[#6ed2e1]  hover:bg-[#6ea4e1] transition-all duration-150 text-base rounded-lg text-black '>Asistire</button>
-            <button className='w-[200px] p-2 bg-[#ead7ba] hover:bg-[#dac8ab] transition-all duration-150 text-base rounded-lg text-black '>No Asistire</button>
+            <button className='w-[200px] p-2 bg-[#6ed2e1]  hover:bg-[#6ea4e1] transition-all duration-150 text-base rounded-lg text-black'
+              onClick={() => {
+                sendConfirmation(true)
+              }}>Asistire</button>
+            <button className='w-[200px] p-2 bg-[#ead7ba] hover:bg-[#dac8ab] transition-all duration-150 text-base rounded-lg text-black'
+              onClick={() => {
+                sendConfirmation(false)
+              }}>No Asistire</button>
           </div>
         </Form>
       </section>

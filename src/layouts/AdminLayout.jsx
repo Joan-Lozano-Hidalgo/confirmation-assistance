@@ -15,8 +15,8 @@ const AdminLayout = ({ children }) => {
 
     const navigation = [
         { name: 'Dashboard', href: '/admin/dashboard' },
-        { name: 'Lista Invitaciones', href: '/admin/list' },
-        { name: 'Enviar Invitaciones', href: '/admin/send-invitation' },
+        { name: 'Invitaciones Confirmadas', href: '/admin/invitation-accepted' },
+        { name: 'Invitaciones Negadas', href: '/admin/invitation-negated' },
     ]
 
     const logout = () => { }

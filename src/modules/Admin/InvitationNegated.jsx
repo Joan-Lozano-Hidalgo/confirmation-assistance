@@ -1,12 +1,12 @@
 import React from 'react'
 
-const SendInvitation = () => {
+const InvitationNegated = () => {
     return (
         <main className='w-full  flex flex-col gap-5 '>
-            <h3 className='text-black'>Envio de Invitaciones</h3>
+            <h3 className='text-black'>Invitaciones negadas</h3>
             <section className='text-base'>Contenido</section>
         </main>
     )
 }
 
-export default SendInvitation
+export default InvitationNegated
