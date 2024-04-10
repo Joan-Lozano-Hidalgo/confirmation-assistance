@@ -6,6 +6,8 @@ import prince from '../../assets/prince.png'
 import bg from '../../assets/bg-7201.jpg'
 import bg_720 from '../../assets/bg-7201.jpg'
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 const ConfirmAssistance = () => {
 
@@ -20,14 +22,39 @@ const ConfirmAssistance = () => {
     uuid: "",
     phone_number: 0
   })
+  const [confirms, setConfirms] = useState([])
   const invitationRef = useRef()
 
   const invitationModel = Schema.Model({
     name: Schema.Types.StringType().isRequired('This field is required.'),
-    invites_confirmed: Schema.Types.NumberType().isRequired('This field is required.'),
-    confirm_invitation: Schema.Types.BooleanType().isRequired('This field is required.'),
+    // invites_confirmed: Schema.Types.NumberType().isRequired('This field is required.'),
+    // confirm_invitation: Schema.Types.BooleanType().isRequired('This field is required.'),
     phone_number: Schema.Types.StringType().isRequired('This field is required.')
   })
+
+  const getConfirms = async () => {
+    setLoading(true)
+    try {
+      const { data } = await BackendAPI.getInvitations()
+      const datos = data?.data.map((item) => {
+        return {
+          id: item.id,
+          name: "Joan Lozano",
+          invites_confirmed: 1,
+          confirm_invitation: true,
+          uuid: "3c9c53b1-758a-41d2-9802-bab673963d50",
+          phone_number: 75130512
+
+        }
+      })
+      setConfirms(datos)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+
+  }
 
   const sendConfirmation = async (estado) => {
     const payload = {
@@ -38,21 +65,30 @@ const ConfirmAssistance = () => {
         phone_number: invitation?.phone_number
       }
     }
-    try {
-      const response = await BackendAPI.createInvitation(payload)
-      console.log(response?.data)
-      if (response.status === 200 && estado === true) {
-        toast.success('Nos alegra que nos acompañes.')
-      } else if (response.status === 200 && estado === false) {
-        toast.warn('Nos entristece que no puedas acompañarnos.')
+    if (confirms.some(item => payload.data.phone_number === String(item.phone_number))) {
+      toast.error('ya existe una confirmacion para ese numero telefonico.')
+      return
+    } else {
+      try {
+        const response = await BackendAPI.createInvitation(payload)
+        console.log(response?.data)
+        if (response.status === 200 && estado === true) {
+          toast.success('Nos alegra que nos acompañes.')
+        } else if (response.status === 200 && estado === false) {
+          toast.warn('Nos entristece que no puedas acompañarnos.')
+        }
+      } catch (error) {
+        console.error(error)
       }
-    } catch (error) {
-      console.error(error)
     }
 
   }
 
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    getConfirms()
+  }, [])
 
   useEffect(() => {
     // Cambiar isVisible a true después de 5 segundos para mostrar la sección
@@ -63,6 +99,20 @@ const ConfirmAssistance = () => {
     // Limpiar el temporizador para evitar fugas de memoria
     return () => clearTimeout(timer);
   }, []);
+
+
+  function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  }
+
+  // Función para redirigir al enlace correcto
+  const handleMapLink = () => {
+    if (isMobileDevice()) {
+      window.location.href = 'geo:0,0?q=Bellanova+Jardín+y+Salones';
+    } else {
+      window.open('https://maps.app.goo.gl/t9rx59VqXFtnYpZMA', '_blank');
+    }
+  };
 
   return (
     <main className='w-full mx-auto min-h-screen flex flex-col justify-center items-center gap-10 relative px-5'
@@ -113,7 +163,7 @@ const ConfirmAssistance = () => {
               placeholder="Joan Lozano"
               className="w-full"
               onChange={(value) => {
-                const formattedValue = value.replace(/[^\d+]/g, '').replace(/^(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
+                const formattedValue = value.replace(/[^\d+]/g, '');
                 setInvitation({ ...invitation, phone_number: formattedValue });
               }}
               maxLength={13}
@@ -130,9 +180,25 @@ const ConfirmAssistance = () => {
                 sendConfirmation(false)
               }}>No Asistire</button>
           </div>
+          <div className='w-full border-stone-300 border-[1px] rounded-lg my-3'></div>
+          <p className='w-full text-center mb-3 font-semibold text-base'> Ubicacion del evento: Bellanova Jardín y Salones</p>
+          <div className='w-full flex justify-center items-center gap-2 '>
+            <a
+              className='w-fit p-2 bg-[#6ea4e1] text- text-base rounded-lg text-black cursor-pointer'
+              onClick={handleMapLink}
+            // href='https://maps.app.goo.gl/t9rx59VqXFtnYpZMA'
+            // href='geo:0,0?q=Bellanova+Jardín+y+Salones'
+            // target="_blank"
+            >
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className="w-5 h-5 mr-3" />
+              Ver en Maps
+            </a>
+          </div>
         </Form>
       </section>
-    </main>
+    </main >
   )
 }
 

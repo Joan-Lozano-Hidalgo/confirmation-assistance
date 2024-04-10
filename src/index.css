@@ -38,3 +38,8 @@ body {
   font-family: "Nunito", sans-serif;
   background: #eeeeee !important;
 }
+
+a {
+  text-decoration: none !important; /* Elimina el subrayado */
+  color: white !important; /* Usa el color heredado (en este caso, el color predeterminado del texto) */
+}
