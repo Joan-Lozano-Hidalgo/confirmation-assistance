@@ -69,7 +69,7 @@ const ConfirmAssistance = () => {
         phone_number: invitation?.phone_number
       }
     }
-    if (confirms.some(item => payload.data.phone_number === String(item.phone_number))) {
+    if (confirms.some(item => payload?.data?.phone_number === String(item?.phone_number))) {
       toast.error('ya existe una confirmacion para ese numero telefonico.')
       return
     } else {
