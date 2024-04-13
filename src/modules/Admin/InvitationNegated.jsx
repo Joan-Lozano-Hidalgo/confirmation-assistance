@@ -57,11 +57,11 @@ const InvitationNegated = () => {
                                         <table className="min-w-full divide-y divide-gray-300">
                                             <thead className="bg-gray-100">
                                                 <tr>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nombre</th>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Invitados confirmados</th>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Confirmación de invitación</th>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">UUID</th>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Teléfono</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Nombre</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Invitados confirmados</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Confirmación de invitación</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">UUID</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Teléfono</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-200 bg-white">
