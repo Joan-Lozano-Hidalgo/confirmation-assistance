@@ -69,12 +69,12 @@ const InvitationAccepted = () => {
                     <table className="min-w-full divide-y divide-gray-300">
                       <thead className="bg-gray-100">
                         <tr>
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Nombre</th>
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-40">Invitados confirmados</th>
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-40">Confirmación de invitación</th>
+                          <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 min-w-52">Nombre</th>
+                          <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 min-w-40">Invitados confirmados</th>
+                          <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 min-w-40">Confirmación de invitación</th>
                           {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">UUID</th> */}
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Teléfono</th>
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-20">Eliminar</th>
+                          <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 min-w-32">Teléfono</th>
+                          <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900 min-w-20">Eliminar</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
