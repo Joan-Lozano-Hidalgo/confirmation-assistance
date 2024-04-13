@@ -48,6 +48,7 @@ const ConfirmAssistance = () => {
         }
       })
       setConfirms(datos)
+      return datos
     } catch (error) {
       console.error(error)
     } finally {
@@ -61,6 +62,8 @@ const ConfirmAssistance = () => {
       toast.error('Por favor complete los campos requeridos.')
       return
     }
+    const datos = await getConfirms()
+
     const payload = {
       data: {
         name: invitation?.name,
@@ -69,7 +72,7 @@ const ConfirmAssistance = () => {
         phone_number: invitation?.phone_number
       }
     }
-    if (confirms.some(item => payload?.data?.phone_number === String(item?.phone_number))) {
+    if (datos.some(item => payload?.data?.phone_number === String(item?.phone_number))) {
       toast.error('ya existe una confirmacion para ese numero telefonico.')
       return
     } else {

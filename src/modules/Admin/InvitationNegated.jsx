@@ -1,14 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { BackendAPI } from '../../services'
 import { Loader } from 'rsuite'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 
-const InvitationNegated = () => {
+const InvitationAccepted = () => {
 
     const [loading, setLoading] = useState(true)
     const [invitations, setInvitations] = useState([])
 
     const getInvitations = async () => {
         try {
+            setLoading(true)
             const { data } = await BackendAPI.getInvitationsFilters(`?filters[confirm_invitation][$eq]=false`)
             const datos = data?.data.map((item) => {
                 return {
@@ -32,9 +35,18 @@ const InvitationNegated = () => {
         getInvitations()
     }, [])
 
+    const deleteInvitation = async (id) => {
+        try {
+            await BackendAPI.deleteInvitation(id)
+            getInvitations()
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <main className='w-full  flex flex-col gap-5 '>
-            <h3 className='text-black'>Invitaciones aceptadas</h3>
+            <h3 className='text-black'>Invitaciones rechadas</h3>
             <section className='w-full flex flex-col  justify-center items-center gap-5'>
                 {
                     loading ?
@@ -58,10 +70,11 @@ const InvitationNegated = () => {
                                             <thead className="bg-gray-100">
                                                 <tr>
                                                     <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Nombre</th>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Invitados confirmados</th>
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Confirmación de invitación</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-40">Invitados confirmados</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-40">Confirmación de invitación</th>
                                                     {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">UUID</th> */}
-                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Teléfono</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Teléfono</th>
+                                                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-20">Eliminar</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-200 bg-white">
@@ -83,6 +96,9 @@ const InvitationNegated = () => {
                                                                 }</td>
                                                                 {/* <td className={`px-3 py-3.5 text-left text-sm font-medium text-gray-900`}>{item.uuid}</td> */}
                                                                 <td className={`px-3 py-3.5 text-left text-sm font-medium text-gray-900`}>{item.phone_number}</td>
+                                                                <td className={`px-3 py-3.5 text-sm font-medium text-red-600 text-center cursor-pointer`} onClick={() => { deleteInvitation(item.id) }}>
+                                                                    <FontAwesomeIcon icon={faCircleXmark} className='w-5 h-5' />
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })
@@ -98,4 +114,4 @@ const InvitationNegated = () => {
     )
 }
 
-export default InvitationNegated
+export default InvitationAccepted

@@ -8,6 +8,7 @@ const backendAPI = {
   createInvitation: (data) => axiosInstanceBackend().post("/invitations", data),
   updateInvitation: (id, data) =>
     axiosInstanceBackend().put(`/invitations/${id}`, data),
+  deleteInvitation: (id) => axiosInstanceBackend().delete(`/invitations/${id}`),
 };
 
 export default backendAPI;

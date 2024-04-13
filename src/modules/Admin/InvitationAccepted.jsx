@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { BackendAPI } from '../../services'
 import { Loader } from 'rsuite'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 
 const InvitationAccepted = () => {
 
@@ -9,6 +11,7 @@ const InvitationAccepted = () => {
 
   const getInvitations = async () => {
     try {
+      setLoading(true)
       const { data } = await BackendAPI.getInvitationsFilters(`?filters[confirm_invitation][$eq]=true`)
       const datos = data?.data.map((item) => {
         return {
@@ -31,6 +34,15 @@ const InvitationAccepted = () => {
   useEffect(() => {
     getInvitations()
   }, [])
+
+  const deleteInvitation = async (id) => {
+    try {
+      await BackendAPI.deleteInvitation(id)
+      getInvitations()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <main className='w-full  flex flex-col gap-5 '>
@@ -58,10 +70,11 @@ const InvitationAccepted = () => {
                       <thead className="bg-gray-100">
                         <tr>
                           <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Nombre</th>
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Invitados confirmados</th>
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Confirmación de invitación</th>
+                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-40">Invitados confirmados</th>
+                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-40">Confirmación de invitación</th>
                           {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">UUID</th> */}
-                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-52">Teléfono</th>
+                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-32">Teléfono</th>
+                          <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-20">Eliminar</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
@@ -83,6 +96,9 @@ const InvitationAccepted = () => {
                                 }</td>
                                 {/* <td className={`px-3 py-3.5 text-left text-sm font-medium text-gray-900`}>{item.uuid}</td> */}
                                 <td className={`px-3 py-3.5 text-left text-sm font-medium text-gray-900`}>{item.phone_number}</td>
+                                <td className={`px-3 py-3.5 text-sm font-medium text-red-600 text-center cursor-pointer`} onClick={() => { deleteInvitation(item.id) }}>
+                                  <FontAwesomeIcon icon={faCircleXmark} className='w-5 h-5' />
+                                </td>
                               </tr>
                             )
                           })
