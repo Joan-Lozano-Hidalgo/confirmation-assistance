@@ -1,7 +1,7 @@
 import { axiosInstanceBackend } from "../../apis";
 
 const backendAPI = {
-  getInvitations: () => axiosInstanceBackend().get("/invitations"),
+  getInvitations: () => axiosInstanceBackend().get("/invitations?pagination[pageSize]=100"),
   getInvitationsFilters: (filter) =>
     axiosInstanceBackend().get(`/invitations${filter}`),
   getInvitation: (id) => axiosInstanceBackend().get(`/invitations/${id}`),

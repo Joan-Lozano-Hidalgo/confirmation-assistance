@@ -57,7 +57,33 @@ const ConfirmAssistance = () => {
 
   }
 
+  const clearForm = () => {
+    setInvitation({
+      id: null,
+      name: "",
+      number_of_invites: 1,
+      send: true,
+      invites_confirmed: 1,
+      confirm_invitation: false,
+      uuid: "",
+      phone_number: ""
+    })
+  }
+  const canSendConfirmation = () => {
+    const maxConfirmationDate = new Date('2024-04-28')
+    const currentDate = new Date()
+
+    return currentDate < maxConfirmationDate
+  }
+
   const sendConfirmation = async (estado) => {
+    if (!canSendConfirmation()) {
+      toast.error(
+          'Lo sentimos, la fecha limite para confirmar asistencia ha pasado. Te sugerimos ponerte en contacto con los organizadores.',
+          {autoClose: false}
+      )
+      return
+    }
     if (!invitationRef.current.check()) {
       toast.error('Por favor complete los campos requeridos.')
       return
@@ -73,7 +99,7 @@ const ConfirmAssistance = () => {
       }
     }
     if (datos.some(item => payload?.data?.phone_number === String(item?.phone_number))) {
-      toast.error('ya existe una confirmacion para ese numero telefonico.')
+      toast.error('ya existe una confirmación para ese numero telefónico.')
       return
     } else {
       try {
@@ -81,6 +107,7 @@ const ConfirmAssistance = () => {
         console.log(response?.data)
         if (response.status === 200 && estado === true) {
           toast.success('Nos alegra que nos acompañes.')
+          clearForm()
         } else if (response.status === 200 && estado === false) {
           toast.warn('Nos entristece que no puedas acompañarnos.')
         }
@@ -188,7 +215,10 @@ const ConfirmAssistance = () => {
               }}>No Asistire</button>
           </div>
           <div className='w-full border-stone-300 border-[1px] rounded-lg my-3'></div>
-          <p className='w-full text-center mb-3 font-semibold text-base'> Ubicacion del evento: Bellanova Jardín y Salones</p>
+          <p className='w-full text-center mb-3 font-semibold text-base'>
+            Domingo 05 de mayo - 3:00 PM <br/>
+            Ubicación del evento: Bellanova Jardín y Salones
+          </p>
           <div className='w-full flex justify-center items-center gap-2 '>
             <a
               className='w-fit p-2 bg-[#6ea4e1] text- text-base rounded-lg text-black cursor-pointer'
