@@ -63,9 +63,10 @@ const Dashboard = () => {
                 return {
                     id: item.id,
                     confirm_invitation: item?.attributes?.confirm_invitation,
+                    invites_confirmed: item?.attributes?.invites_confirmed,
                 }
             })
-            const trueCount = datos.filter(item => item.confirm_invitation === true).length;
+            const trueCount = datos.reduce((sum, item) => item.confirm_invitation ? sum + item.invites_confirmed : sum, 0);
             const falseCount = datos.filter(item => item.confirm_invitation === false).length;
 
             setData({
@@ -74,12 +75,12 @@ const Dashboard = () => {
                     {
                         label: 'Asistencias',
                         data: [trueCount],
-                        backgroundColor: '#dac8ab',
+                        backgroundColor: '#63bcf9',
                     },
                     {
                         label: 'Inasistencias',
                         data: [falseCount],
-                        backgroundColor: '#6ea4e1',
+                        backgroundColor: '#ffc8c8',
                     },
                 ],
             })

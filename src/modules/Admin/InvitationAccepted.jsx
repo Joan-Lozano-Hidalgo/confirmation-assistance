@@ -12,7 +12,7 @@ const InvitationAccepted = () => {
   const getInvitations = async () => {
     try {
       setLoading(true)
-      const { data } = await BackendAPI.getInvitationsFilters(`?filters[confirm_invitation][$eq]=true`)
+      const { data } = await BackendAPI.getInvitationsFilters(`?filters[confirm_invitation][$eq]=true&pagination[pageSize]=100`)
       const datos = data?.data.map((item) => {
         return {
           id: item.id,
